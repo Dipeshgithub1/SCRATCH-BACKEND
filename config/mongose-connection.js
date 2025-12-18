@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
-const dbgr = require("debug") ("development:mongoose")
+const dbgr = require("debug")("development:mongoose")
+const config = require('config')
 
 
 mongoose
-.connect("mongodb://localhost:27017/SCRATCH")
+  .connect(`${config.get("MONGODB_URL")}/SCRATCH`)
 .then(() => {
     dbgr("Connected to MongoDB");
   })

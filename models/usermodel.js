@@ -27,18 +27,15 @@ password: {
 },
 
 contact: {
-    type: Number,
-     required:true
+    type: Number
 },
 
 dob: {
-    type: Date,
-     required:true
+    type: Date
 },
 
 picture: {
     type: String,
-     required:true,
      trim:true
 },
 

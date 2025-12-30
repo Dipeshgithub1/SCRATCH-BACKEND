@@ -50,8 +50,45 @@ const registerUser = async (req,res) => {
         
     }
 }
+
+const loginUser = async(req,res) => {
+  try {
+    let {email,password} = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    let user = await usermodel.findOne({email:email});
+    if(!user) 
+      return res.status(404).json({ message: "Invalid email or password" })
+     const isMatch = await bcrypt.compare(password,user.password)
+      if(!isMatch){
+        return res.status(401).json({ message: "Invalid email or password" });
+    }
+       // generate token
+    const token = generateToken(user);
+
+    // set cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({
+      message: "Login successful",
+      userId: user._id,
+    });
+      
+    
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
   module.exports = {
-    registerUser
+    registerUser,loginUser
   }
 
 

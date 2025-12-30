@@ -22,7 +22,7 @@ require("dotenv").config()
 app.set("view engine","ejs")
 
 app.use("/owners",OwnersRouter)
-app.use("/users",UsersRouter)
+
 app.use("/products",ProductsRouter)
 app.use("/api/users", UsersRouter);
 
